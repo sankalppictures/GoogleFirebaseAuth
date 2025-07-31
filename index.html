@@ -1,52 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>लोडिंग...</title>
+    <title>भविष्यवादी रेट्रो फ़ोन</title>
+    <!-- Tailwind CSS CDN को लोड करें -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* बॉडी और HTML को पूर्ण-स्क्रीन बनाएं */
-        html, body {
+        /* कस्टम CSS: रेट्रो लुक और फील */
+        body {
+            font-family: 'Inter', sans-serif; /* सामान्य टेक्स्ट के लिए */
+            background-color: #0a0a0a; /* बहुत गहरा पृष्ठभूमि */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden; /* स्क्रॉलिंग अक्षम करें */
+            overflow: hidden; /* कोई अतिरिक्त स्क्रॉलिंग नहीं */
+        }
+
+        /* फ़ोन कंटेनर के लिए चमक एनिमेशन */
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.2), 0 0 10px rgba(236, 72, 153, 0.1); }
+            50% { box-shadow: 0 0 50px rgba(139, 92, 246, 0.5), 0 0 25px rgba(236, 72, 153, 0.3); }
+            100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.2), 0 0 10px rgba(236, 72, 153, 0.1); }
+        }
+
+        .phone-container {
+            background-color: #1a1a1a; /* फ़ोन का मुख्य रंग */
+            border: 8px solid #333; /* बाहरी किनारा */
+            border-radius: 3rem; /* गोल कोने */
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.3), 0 0 20px rgba(236, 72, 153, 0.2); /* भविष्यवादी चमक */
+            width: 90%; /* मोबाइल पर चौड़ाई */
+            max-width: 360px; /* अधिकतम चौड़ाई */
+            aspect-ratio: 9 / 16; /* फ़ोन का पहलू अनुपात */
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            animation: glow 3s infinite alternate ease-in-out; /* चमकती हुई एनीमेशन */
+        }
+
+        /* स्क्रीन के लिए ग्लिच एनिमेशन */
+        @keyframes glitch {
+            0% { transform: translate(0); filter: hue-rotate(0deg); opacity: 1; }
+            20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); opacity: 0.9; }
+            40% { transform: translate(2px, -2px); filter: hue-rotate(180deg); opacity: 0.8; }
+            60% { transform: translate(-1px, 1px); filter: hue-rotate(270deg); opacity: 0.9; }
+            80% { transform: translate(1px, -1px); filter: hue-rotate(360deg); opacity: 1; }
+            100% { transform: translate(0); filter: hue-rotate(0deg); opacity: 1; }
+        }
+
+        .screen {
+            background-color: #003300; /* रेट्रो ग्रीन स्क्रीन */
+            border: 3px solid #005500;
+            border-radius: 0.5rem;
+            height: 35%; /* स्क्रीन की ऊंचाई */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00; /* ग्रीन टेक्स्ट */
+            font-family: 'Press Start 2P', cursive; /* पिक्सेलयुक्त फ़ॉन्ट */
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px #00ff00; /* चमक प्रभाव */
+            overflow: hidden; /* सुनिश्चित करें कि टेक्स्ट बाहर न जाए */
+            word-break: break-all; /* लंबे शब्दों को तोड़ें */
+            position: relative;
+        }
+
+        .screen.glitch-effect {
+            animation: glitch 0.3s linear infinite;
+        }
+
+        .screen-text {
+            white-space: pre-wrap; /* नई लाइनों और स्पेस को बनाए रखें */
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem; /* बटनों के बीच की जगह */
+            flex-grow: 1; /* कीपैड को बची हुई जगह भरने दें */
+        }
+
+        .key-button {
+            background-color: #333; /* बटन का रंग */
+            color: #e0e0e0; /* बटन टेक्स्ट का रंग */
+            padding: 1rem;
+            border-radius: 9999px; /* पूरी तरह से गोल */
+            font-size: 1.5rem;
+            font-weight: bold;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000; /* पृष्ठभूमि को काला करें */
+            cursor: pointer;
+            transition: background-color 0.1s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out, scale 0.1s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            user-select: none; /* टेक्स्ट चयन अक्षम करें */
+            -webkit-tap-highlight-color: transparent; /* मोबाइल पर टैप हाइलाइट हटाएँ */
         }
 
-        /* GIF कंटेनर */
-        #gifContainer {
-            width: 100%; /* स्क्रीन की पूरी चौड़ाई लें */
-            height: 100%; /* स्क्रीन की पूरी ऊंचाई लें */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden; /* सुनिश्चित करें कि GIF कंटेनर के बाहर न जाए */
+        .key-button:active {
+            background-color: #555; /* दबाने पर गहरा */
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        /* GIF इमेज */
-        #loadingGif {
-            width: 100%; /* कंटेनर की पूरी चौड़ाई लें */
-            height: 100%; /* कंटेनर की पूरी ऊंचाई लें */
-            object-fit: cover; /* GIF को कंटेनर को कवर करने के लिए स्केल करें, पहलू अनुपात भिन्न होने पर क्रॉप करें */
+        .action-button {
+            background: linear-gradient(90deg, #8b5cf6, #ec4899); /* एक्शन बटन के लिए ग्रेडिएंट */
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .action-button:active {
+            background: linear-gradient(90deg, #6d28d9, #be185d);
+        }
+
+        /* छोटे स्क्रीन के लिए फ़ॉन्ट आकार समायोजित करें */
+        @media (max-width: 400px) {
+            .screen {
+                font-size: 1rem;
+            }
+            .key-button {
+                font-size: 1.2rem;
+                padding: 0.8rem;
+            }
+            .action-button {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="gifContainer">
-        <img id="loadingGif" src="https://cdn.pixabay.com/animation/2023/03/08/07/08/07-08-09-638_512.gif" alt="लोडिंग एनीमेशन">
+
+    <div class="phone-container">
+        <!-- फ़ोन स्क्रीन -->
+        <div id="screen" class="screen">
+            <div id="screen-text" class="screen-text">PIN दर्ज करें:</div>
+            <div id="pin-display" class="screen-text mt-2"></div>
+        </div>
+
+        <!-- कीपैड -->
+        <div class="keypad">
+            <button class="key-button" data-value="1">1</button>
+            <button class="key-button" data-value="2">2</button>
+            <button class="key-button" data-value="3">3</button>
+            <button class="key-button" data-value="4">4</button>
+            <button class="key-button" data-value="5">5</button>
+            <button class="key-button" data-value="6">6</button>
+            <button class="key-button" data-value="7">7</button>
+            <button class="key-button" data-value="8">8</button>
+            <button class="key-button" data-value="9">9</button>
+            <button class="key-button" data-value="*">*</button>
+            <button class="key-button" data-value="0">0</button>
+            <button class="key-button" data-value="#">#</button>
+            <button id="clear-button" class="key-button action-button col-span-1">मिटाएँ</button>
+            <button id="call-button" class="key-button action-button col-span-2">लॉगिन</button>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 5 सेकंड के बाद रीडायरेक्ट करें
+        // DOM तत्वों को प्राप्त करें
+        const screenElement = document.getElementById('screen');
+        const screenText = document.getElementById('screen-text');
+        const pinDisplay = document.getElementById('pin-display');
+        const keyButtons = document.querySelectorAll('.key-button');
+        const clearButton = document.getElementById('clear-button');
+        const callButton = document.getElementById('call-button');
+
+        // पासवर्ड और वर्तमान इनपुट
+        const CORRECT_PIN = "1234";
+        let currentInput = "";
+        let isLocked = true; // फ़ोन शुरू में लॉक है
+        let loginAttemptTimeout = null; // लॉगिन प्रयास के लिए टाइमआउट हैंडल
+
+        // ध्वनि प्रभाव के लिए ऑडियो संदर्भ
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioContext = new AudioContext();
+
+        // ध्वनि उत्पन्न करने का फ़ंक्शन
+        function playTone(frequency, duration, type = 'sine', volume = 0.5) {
+            if (!audioContext) return; // ऑडियो संदर्भ उपलब्ध नहीं है तो बाहर निकलें
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = frequency;
+            oscillator.type = type;
+            gainNode.gain.setValueAtTime(volume, audioContext.currentTime); // वॉल्यूम सेट करें
+
+            oscillator.start();
+            // ध्वनि को धीरे-धीरे कम करें
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        // स्क्रीन को अपडेट करने का फ़ंक्शन
+        function updateScreen(message, pin = '') {
+            screenText.textContent = message;
+            pinDisplay.textContent = pin;
+        }
+
+        // स्क्रीन पर ग्लिच प्रभाव लागू करें
+        function applyGlitchEffect() {
+            screenElement.classList.add('glitch-effect');
             setTimeout(() => {
-                window.location.href = 'https://sankalppictures.github.io/Auticate/';
-            }, 3200); // 5000 मिलीसेकंड = 5 सेकंड
+                screenElement.classList.remove('glitch-effect');
+            }, 500); // 0.5 सेकंड के बाद ग्लिच हटाएँ
+        }
+
+        // लॉगिन प्रयास फ़ंक्शन
+        function attemptLogin() {
+            if (!isLocked) {
+                updateScreen("फ़ोन पहले से ही अनलॉक है!", "स्वागत है!");
+                playTone(880, 0.1, 'sine', 0.7); // सफलता ध्वनि
+                return;
+            }
+
+            if (currentInput === CORRECT_PIN) {
+                applyGlitchEffect(); // सफल होने पर ग्लिच प्रभाव
+                updateScreen("स्वागत है!", "फ़ोन अनलॉक हो रहा है...");
+                pinDisplay.textContent = ""; // PIN डिस्प्ले साफ़ करें
+                isLocked = false; // फ़ोन अनलॉक करें
+                playTone(880, 0.1, 'sine', 0.7); // सफलता ध्वनि
+
+                // कुछ सेकंड के बाद रीडायरेक्ट करें
+                setTimeout(() => {
+                    window.location.href = "https://sankalppictures.github.io/Auticate/";
+                }, 1500); // 1.5 सेकंड के बाद रीडायरेक्ट करें
+            } else {
+                applyGlitchEffect(); // त्रुटि पर ग्लिच प्रभाव
+                updateScreen("त्रुटि!", "गलत PIN। पुनः प्रयास करें।");
+                pinDisplay.textContent = ""; // PIN डिस्प्ले साफ़ करें
+                currentInput = ""; // इनपुट रीसेट करें
+                playTone(150, 0.2, 'sawtooth', 0.6); // त्रुटि ध्वनि
+
+                // कुछ सेकंड के बाद PIN इनपुट प्रॉम्प्ट पर वापस आएं
+                setTimeout(() => {
+                    if (isLocked) { // यदि अभी भी लॉक है
+                        updateScreen("PIN दर्ज करें:", "");
+                    }
+                }, 2000);
+            }
+        }
+
+        // प्रारंभिक स्थिति सेट करें
+        updateScreen("PIN दर्ज करें:", "");
+
+        // कीपैड बटन क्लिक हैंडलर
+        keyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (!isLocked) {
+                    updateScreen("फ़ोन अनलॉक है!", "आप इसका उपयोग कर सकते हैं।");
+                    playTone(440, 0.05); // सामान्य क्लिक ध्वनि
+                    return;
+                }
+
+                const value = button.dataset.value;
+                if (currentInput.length < CORRECT_PIN.length) { // PIN की अधिकतम लंबाई
+                    currentInput += value;
+                    updateScreen("PIN दर्ज करें:", '*'.repeat(currentInput.length));
+                    // प्रत्येक अंक के लिए थोड़ी अलग ध्वनि
+                    playTone(440 + (currentInput.length * 20), 0.05); 
+
+                    // यदि PIN पूरा हो गया है, तो स्वचालित रूप से लॉगिन का प्रयास करें
+                    if (currentInput.length === CORRECT_PIN.length) {
+                        // एक छोटे विलंब के बाद लॉगिन का प्रयास करें ताकि उपयोगकर्ता अंतिम अंक देख सके
+                        if (loginAttemptTimeout) clearTimeout(loginAttemptTimeout);
+                        loginAttemptTimeout = setTimeout(() => {
+                            attemptLogin();
+                        }, 500); // 0.5 सेकंड का विलंब
+                    }
+                } else {
+                    // यदि PIN 4 अंकों का है, तो और इनपुट न लें
+                    playTone(200, 0.1, 'square'); // त्रुटि बीप
+                }
+            });
         });
+
+        // मिटाएँ बटन हैंडलर
+        clearButton.addEventListener('click', () => {
+            if (!isLocked) {
+                updateScreen("फ़ोन अनलॉक है!", "आप इसका उपयोग कर सकते हैं।");
+                playTone(440, 0.05);
+                return;
+            }
+            if (loginAttemptTimeout) clearTimeout(loginAttemptTimeout); // किसी भी लंबित लॉगिन प्रयास को साफ़ करें
+            currentInput = "";
+            updateScreen("PIN दर्ज करें:", "");
+            playTone(300, 0.08, 'triangle'); // मिटाने की ध्वनि
+        });
+
+        // लॉगिन बटन हैंडलर (अभी भी काम करता है अगर उपयोगकर्ता मैन्युअल रूप से क्लिक करना पसंद करता है)
+        callButton.addEventListener('click', () => {
+            attemptLogin();
+        });
+
+        // मोबाइल टच इवेंट हैंडलिंग
+        keyButtons.forEach(button => {
+            button.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // डिफ़ॉल्ट व्यवहार (जैसे ज़ूम) को रोकें
+                button.click(); // क्लिक इवेंट को ट्रिगर करें
+            });
+        });
+        clearButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            clearButton.click();
+        });
+        callButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            callButton.click();
+        });
+
     </script>
 </body>
 </html>
